@@ -1,0 +1,240 @@
+% Definitions 1st Compiled 9/30/16
+
+%packages for more functionality
+\usepackage{fullpage} %to get full 8.5-by-11 inch margins
+\usepackage{bbm} %more extensive blackboard bold alphabet
+\usepackage{amssymb} %gives you all the symbols you could want
+\usepackage{graphicx} %helpful for putting in pictures
+\usepackage{enumerate} %control list environments precisely
+\usepackage{mathabx} %more symbols
+\usepackage{xcolor} %colored text
+\usepackage{soul} %for striking out
+%\usepackage{tikz} % com
+\usepackage{tikz-cd} % commutative diagrams
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+%bold letters
+
+\let \P \relax
+\let \H \relax
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\P}{\mathbb{P}}
+\newcommand{\H}{\mathbb{H}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\T}{\mathbb{T}}
+%\renewcommand{\S}{\mathbb{S}} % don't use if want to use the section symbol
+\newcommand{\M}{\mathbb{M}}
+
+
+
+% cal letters
+%\let \AA \relax
+
+%\newcommand{\AA}{\mathcal{A}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\EE}{\mathcal{E}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\DD}{\mathcal{D}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\GG}{\mathcal{G}}
+\newcommand{\NN}{\mathcal{N}}
+\newcommand{\II}{\mathcal{I}}
+\newcommand{\VV}{\mathcal{V}}
+
+% shorter greek
+
+%for theta
+\let \th \relax
+\let \o \relax
+
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\de}{\delta}
+\newcommand{\De}{\Delta}
+\newcommand{\la}{\lambda}
+\newcommand{\La}{\Lambda}
+\newcommand{\ka}{\kappa}
+\newcommand{\Si}{\Sigma}
+\newcommand{\si}{\sigma}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\th}{\theta}
+\newcommand{\Ga}{\Gamma}
+\newcommand{\om}{\omega}
+\newcommand{\Om}{\Omega}
+
+\newcommand{\grad}{\nabla}
+\newcommand{\hess}{\nabla^2}
+
+
+% because I am overcome by laziness
+\newcommand{\g}{\nabla}
+\newcommand{\o}{\circ} % useful for polars and compositions
+
+
+% random commands
+
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\mb}[1]{\vec{\mathbf{#1}}}
+\newcommand{\mbk}{\color{red}}
+\newcommand{\Tr}{\text{tr}\,}
+\newcommand{\cross}{\times}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mf}{\mathfrak}
+\renewcommand{\d}{\partial}
+\renewcommand{\mc}{\mathcal}
+\newcommand{\w}{\wedge}
+\newcommand{\minus}{\smallsetminus}
+\renewcommand{\bar}{\overline}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\phi}{\varphi}
+
+
+
+
+%inner products
+\let \< \relax
+\let \> \relax
+\newcommand{\<}{\langle}
+\newcommand{\>}{\rangle}
+
+
+% Matrix norm with three bars
+\newcommand{\mn}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+% For ultimate laziness
+\newcommand{\BM}{\begin{matrix}}
+\newcommand{\EM}{\end{matrix}}
+
+%\newcommand{\BA}{ \begin{align*} }     not sure why this doesn't work
+%\newcommand{\EA}{ \end{align*} }
+
+
+
+% Coordinate vector fields
+
+\newcommand{\ddt}{\frac{\partial}{\partial t}}
+\newcommand{\dds}{\frac{\partial}{\partial s}}
+\newcommand{\ddx}{\frac{\partial}{\partial x}}
+\newcommand{\ddy}{\frac{\partial}{\partial y}}
+\newcommand{\ddz}{\frac{\partial}{\partial z}}
+
+\newcommand{\ddxi}{\frac{\partial}{\partial x^i}}
+\newcommand{\ddxj}{\frac{\partial}{\partial x^j}}
+
+\newcommand{\ddsi}{\frac{\partial}{\partial s^i}}
+\newcommand{\ddsj}{\frac{\partial}{\partial s^j}}
+
+\newcommand{\ddxx}[1]{\frac{\partial}{\partial x^{#1}} }
+\newcommand{\ddss}[1]{\frac{\partial}{\partial s^{#1}} }
+
+
+
+
+
+%I want to write certain math expressions in Roman font instead of the italicized math font.  Especially functions, but things like sine and cosine have built in \sin and \cos commands.  \DeclareMathOperator lets you make similar function expressions of your own.
+
+\let \Im \relax
+\let \Re \relax
+\let \div \relax
+\let \O \relax
+\let \Tr \relax
+\let \null \relax
+
+
+%\DeclareMathOperator{\grad}{grad} % the nabla symbol is better
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\O}{O}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\stab}{stab}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Orb}{Orb}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\range}{Range}
+\DeclareMathOperator{\Range}{Range}
+\DeclareMathOperator{\kernel}{Ker}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\null}{Null}
+\DeclareMathOperator{\Null}{Null}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\epi}{epi}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\conv}{conv}
+%\DeclareMathOperator{\cl}{cl} % apparently this is built in
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\ri}{ri}
+\DeclareMathOperator{\rb}{rb}
+\DeclareMathOperator{\co}{co}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\lev}{lev}
+\DeclareMathOperator{\Ab}{Ab}
+\DeclareMathOperator{\ddiag}{ddiag}
+\DeclareMathOperator{\deh}{deh}
+\DeclareMathOperator{\rowspan}{rowspan}
+%\DeclareMathOperator{\hom}{hom}
+
+
+%Spacing for theorems, lemmas, etc...
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remarks}
+
+
+% spacing for function restriction
+\newcommand\restrict[2]{\ensuremath{\left.#1\right|_{#2}}}
+
+
+\newcommand{\etal}{\textit{et al}.~}
+\newcommand{\ie}{\textit{i}.\textit{e}.~}
+\newcommand{\eg}{\textit{e}.\textit{g}.~}

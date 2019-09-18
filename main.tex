@@ -1,0 +1,108 @@
+\documentclass[10pt,letterpaper,oneside]{amsart}
+\usepackage[square,sort,comma,numbers]{natbib}
+
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage[letterpaper]{geometry}
+\usepackage[draft,inline,nomargin]{fixme}
+\usepackage{graphicx}
+\fxsetup{theme=color}
+
+\input{Defs}
+\DeclareMathOperator{\Syz}{Syz}
+\DeclareMathOperator{\row}{row}
+
+\renewcommand{\bf}{\mathbf}
+
+\title{Macaulay matrix row selection}
+\author{Andrew Pryhuber}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Notation}
+
+\begin{itemize}
+    \item Fix polynomial ring $R = \C[x_1, \dots, x_m]$
+    \item Macaulay matrix of $I = \< f_1, \dots, f_n\>$ of degree $d$ is $M(d)$.
+    \item Syzygy module of $f_1, \dots, f_n$ is $\Syz(f_1, \dots, f_n) = \{\bf{h} : \bf{h}^\top \bf{f} = \sum_{i= 1}^n h_if_i = 0\}$.
+    \item $S(f_i,f_j)$ is the s-polynomial of $f_i$, $f_j$.
+    \item Given some polynomial $p \in \C[x_1, \dots, x_m]$, for any $d \ge \deg(p)$, $p$ can be identified with some element of the vector space $\C[x_1, \dots, x_m]_d$ consisting of polynomials of degree at most $d$. When we wish to specify in which degree we are considering $p$, we write $p_d$. For a fixed basis of $\C[x_1, \dots, x_m]_d$, $p_d$ is represented by a column vector of size ${ m +d \choose d}$. 
+\end{itemize}
+
+
+
+\begin{example}
+\label{ex:syzreduce}
+Let $R = \C[x_1,x_2,x_3]$ and consider the ideal $I = \< f_1,f_2,f_3\> $ where
+\begin{align*}
+f_1 &= {x}_{1}^{3}-{x}_{1}+{x}_{2}+{x}_{3}-10\\
+f_2 &= {x}_{2}^{3}+{x}_{1}-{x}_{2}+{x}_{3}-10\\
+f_3 &= {x}_{3}^{3}+{x}_{1}+{x}_{2}-{x}_{3}-10.
+\end{align*}
+Define $p = S(f_1, f_2) + S(f_2,f_3) = -{x}_{1}^{4}+{x}_{1}^{3}{x}_{2}-2\,{x}_{1}{x}_{2}^{3}-{x}_{1}^{3}{x}_{3
+      }+2\,{x}_{2}^{3}{x}_{3}+{x}_{1}{x}_{3}^{3}-{x}_{2}{x}_{3}^{3}+{x}_{3}^{4
+      }+10\,{x}_{1}^{3}-10\,{x}_{3}^{3}$. This can certainly be written as a linear combination of the four monomial multiples of the original generators $\{x_2^3 f_1, x_1^3 f_2, x_3^3 f_2, x_2^3 f_3\}$, hence $p_6$ only requires four rows to be represented as an element of the row space of $M(6)$. One can check (using syzReductionEx.m) that $p_4$ is also in the row span of $M(4)$, however $M(4)$ is full rank, so there a unique $h$ such that $p_4 = h^\top M(4)$. This $h$ has 10 non zero entries, i.e., it requires 10 monomials multiples of the generators $f_i$ to produce $p_4$. Increasing degree from 4 to 6 allows us to represent $p$ using fewer monomial multiples. 
+\end{example}
+Assuming we have chosen a sufficiently large $d$ such that $p_d \in \row M(d)$, these minimal representations of $p_d$ can be found by solving the following minimization problem.
+\begin{align}
+    &\min \quad \|h\|_0 \\
+         &p_d = h^\top M(d). 
+\end{align}
+Observe that the number of rows of $M(d)$ grows as a polynomial as $d$ increases. Therefore this problem is not tractable as we increase $d$. Instead, we consider the convex relaxation 
+\begin{align}
+    &\min \quad\|h\|_1 \\
+         &p_d = h^\top M(d),
+\end{align}
+which is the well known basis pursuit problem (see Section 6.5.4 in \cite{boyd2004convex}). While the 1-norm problem is a relaxation, it is common that it yields a sparse solution. For the ideal $I$ and polynomial $p$ from Example \ref{ex:syzreduce}, solving this problem for degrees $d = 4, \dots, 10$ with CVX gives the following results
+\begin{table}[]
+\begin{tabular}{lll}
+$d$ & $\min\|h\|_1$ & numNonZero(h)  \\
+4     & 30   & 10 \\
+5     & 30   & 10 \\
+6     & 4    & 4  \\
+7     & 3.8  & 20 \\
+8     & 3.5  & 32 \\
+9     & 2.7  & 12 \\
+10    & 2.67 & 18
+\end{tabular}
+\end{table}
+
+\newpage
+
+
+The results beg the question of whether there is a degree $d^*$ specified by a set of generators $f_1, \dots, f_n$ such that a representation of $p_{d^*}$ using the fewest number of rows from $M(d^*)$ also yields a minimal representation of $p_d$ using the rows of $M(d)$ for all $d \ge d^*$. If there is such a finite $d^*$, it must be lower bounded by the quantity $d_S$ which will define below. First we make precise what we mean by the degree of a syzygy.
+
+\begin{definition}
+Suppose $\bf{h} \in \Syz(f_1, \dots, f_n)$. Then $\deg(\bf{h}) = \max_i \deg(h_i f_i)$. 
+\end{definition}
+
+It is well known that the elements in the left null space of the Macaulay matrix represent syzygies (\cite{batselier2014null}, \cite{stetter2004numerical}). In order for a syzygy $\bf{h}$ to correspond to something in the left null space of $M(d)$, it is necessary that $\deg(\bf{h}) \le d$. In fact, $\bf{h}$ is a syzygy of degree at most $d$ if and only if there is some corresponding $h \in \ker M(d)^\top$ such that $\bf{h}^\top \bf{f} = h^\top M(d)$. Notice that as we increase $d$, it becomes possible to express more syzygies among the $f_i$ as left null space elements of $M(d)$. 
+\begin{definition}
+Let $d_S$ be the smallest degree such that elements of $\ker(M(d)^\top)$ can generate $\Syz(f_1, \dots, f_n)$ as an $R$-module. 
+\end{definition}
+
+From a Gr\"{o}bner basis of $I = \< f_1, \dots, f_n\>$, one can compute generators of $\Syz(f_1, \dots, f_n)$, say $\bf{h}_1,\dots, \bf{h}_s$. If the maximal degree of the $\bf{h}_i$ is $d_{\max}$, then the elements of $\ker(M(d_{\max})^\top)$ can generate $\Syz(f_1, \dots, f_n)$ by construction. Is there a notion of minimal degree generators of $\Syz(f_1, \dots, f_n)$?
+
+For the polynomials from Example \ref{ex:syzreduce}, the syzygy module can be computed in Macaulay2:
+\begin{align}
+\Syz(f_1, \dots, f_n) = \left \< \begin{pmatrix}
+      {x}_{2}^{3}+{x}_{1}-{x}_{2}+{x}_{3}-10\\-{x}_{1}^{3}+{x}_{1}-{x}_{2}-{x}_{3}+10\\0\end{pmatrix},\begin{pmatrix}
+      0\\{x}_{3}^{3}+{x}_{1}+{x}_{2}-{x}_{3}-10\\-{x}_{2}^{3}-{x}_{1}+{x}_{2}-{x}_{3}+10\end{pmatrix},\begin{pmatrix}
+      {x}_{3}^{3}+{x}_{1}+{x}_{2}-{x}_{3}-10\\0\\-{x}_{1}^{3}+{x}_{1}-{x}_{2}-{x}_{3}+10\end{pmatrix}\right\>
+\end{align}
+The maximal degree among the generators is 6. When increasing degree from $M(4)$ to $M(6)$, the minimal representations of $p_4$ and $p_6$ are 
+$p_4 = (-x_1 +x_2 -x_3 +10)f_1 + (-2x_1 +2 x_3)f_2 + (x_1 -x_2 + x_3 -10)f_3$ and $p_6 = x_2^3 f_1 + (x_3^3 - x_1^3)f_2 - x_2^3 f_3$. Because we have ``uncovered" the top degree term of the syzygies, we can replace the large number of trailing terms with the smaller number of high degree monomial multiples $\{x_2^3 f_1, x_1^3 f_2, x_3^3 f_2, x_2^3 f_3\}$. Of course, this example was carefully crafted so perhaps there are other polynomials that require $M(d)$ for some large $d$ to get a minimal representation. This just suggests that the search for minimal representations should at least involved degree up to the maximal degree of the generators of $\Syz(f_1, \dots, f_n)$. 
+
+
+
+\bibliography{references}{}
+\bibliographystyle{siam}
+
+
+\end{document}
