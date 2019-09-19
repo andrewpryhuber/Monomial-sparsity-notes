@@ -1,14 +1,13 @@
 
-numVars = 4;
-syms x_1 x_2 x_3 x_4
-allVars = [x_1, x_2 , x_3, x_4];
+numVars = 3;
+syms x_1 x_2 x_3
+allVars = [x_1, x_2 , x_3];
 
 % read in generators from M2 
 generators = polyArrToPolySys( readPolysFromFile('generators') , allVars); 
 
 % read in reducibles from M2 (assume GRevLex for now to make these)
 reducibles = polyArrToPolySys( readPolysFromFile('reducibles') , allVars);
-
 
 
 % maximal degree among reducibles, used to determine inital degree,
@@ -19,7 +18,7 @@ numReducibles = size(reducibles,1);
 
 
 testrangemin = maxDegReducibles;
-testrangemax = testrangemin; %change to allow search in higher degree
+testrangemax = testrangemin + 1; %change to allow search in higher degree
 
 data = zeros(testrangemax-testrangemin,3);
 
