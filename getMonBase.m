@@ -1,3 +1,6 @@
+% September 2019 function copied verbatim from
+% https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+
 function base = getMonBase(d,n)
 % base = getMonBase(d,n)
 % ---------------------
@@ -17,7 +20,7 @@ function base = getMonBase(d,n)
 % example: d= 2, n = 3
 %
 % base =
-% 
+%
 %      2     0     0
 %      1     1     0
 %      1     0     1

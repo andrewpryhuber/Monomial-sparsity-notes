@@ -1,3 +1,6 @@
+% September 2019 function copied verbatim from
+% https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+
 function M=sparseM(polysys,d,varargin)
 
 dorig=getDorig(polysys);
@@ -21,7 +24,7 @@ else
  if dmin > d
      error('The extra argument cannot be smaller than d')
  end
- 
+
  shiftindices = cell(neq,1);
  for i=1:neq
   ncoef(i) = length(polysys{i,1});
@@ -46,7 +49,7 @@ Jcounter=1;
 for i=1:neq
     for j=1:length(shiftindices{i})
         % coefficients in V
-        V(IVcounter:IVcounter+ncoef(i)-1)=polysys{i,1};   
+        V(IVcounter:IVcounter+ncoef(i)-1)=polysys{i,1};
         % row indices in I
         I(IVcounter:IVcounter+ncoef(i)-1)=feti(polysys{i,2}+ones(ncoef(i),1)*fite(shiftindices{i}(j),n));
         % column indices in J
@@ -54,7 +57,7 @@ for i=1:neq
         Jcounter=Jcounter+1;
         IVcounter=IVcounter+ncoef(i);
  end
-end 
+end
 
 M=sparse(J,I,V,p,q);
 end

@@ -1,7 +1,10 @@
+% September 2019 function copied verbatim from
+% https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+
 function [M nzmax] = getM(polysys,d,varargin)
 % [M nzmax]  = getM(polysys,d,sparseM|factorvec)
 % ----------------------------------------------
-% 
+%
 % This function makes the M matrix of given set of polynomial equations
 % polysys and maximal total degree of d. The maximum total degree of the
 % original set of equations d0 is also returned. When the given degree d is
@@ -46,7 +49,7 @@ d0 =0;
 if nargin < 3
     sparseM = 0;
     factorvec=[];
-elseif nargin < 4 
+elseif nargin < 4
     sparseM = varargin{1};
     factorvec=[];
 else
@@ -68,12 +71,12 @@ else
 end
 
 ncoef = zeros(1,n_eq);
-for i = 1 : n_eq    
+for i = 1 : n_eq
     ncoef(i) = length(polysys{i,1});
     dorig(i,1) = max(sum(polysys{i,2},2));
     if max(sum(polysys{i,2},2)) > d0
         d0 = max(sum(polysys{i,2},2));
-    end    
+    end
 end
 
 % check given degree argument
@@ -123,46 +126,46 @@ c = nchoosek(d+n,n);
 
 % first allocate memory for the M matrix to speed things up
 if sparseM
-    M = sparse([],[],[],r,c,nzmax); 
+    M = sparse([],[],[],r,c,nzmax);
 else
-    M = zeros(r,c);    
+    M = zeros(r,c);
 end
 
-rowcounter = 1; 
+rowcounter = 1;
 
 if ~isempty(factorvec)
-  % we know at this point that dshared > 0 and dleft=0 
-  
+  % we know at this point that dshared > 0 and dleft=0
+
   % only do the rows that need to be done
   for i = 1 : length(rowsToDo)
-      
+
       col = zeros(1,size(polysys{1,2},1));
-      
+
       for j = 1 : size(polysys{1,2},1) % for each monomial in the equation
          col(j) = feti(fite(rowsToDo(i))+polysys{1,2}(j,:));
       end
-      
+
       M(rowsToDo(i),col) = polysys{1,1};
   end
 else
     % do shared part
     if dshared >= 0
-    
+
     addBase = getMon(dshared,n);
-    
+
     for j = 1 : size(addBase,1)     % for each shift
-        
+
         for i =1: n_eq    % for each equation
             col = zeros(1,size(polysys{i,2},1));
             for k = 1 : size(polysys{i,2},1) % for each monomial in the equation
-                
-                col(k) = feti(addBase(j,:)+polysys{i,2}(k,:));            
+
+                col(k) = feti(addBase(j,:)+polysys{i,2}(k,:));
             end
-            
+
             M(rowcounter,col) = polysys{i,1};
             rowcounter = rowcounter + 1;
         end
-    end    
+    end
     end
 end
 
@@ -171,17 +174,17 @@ end
 % now do remaining parts
 
 for i =1: n_eq    % for each equation
-    
+
     % determine the monomials we additionally need to multiply with
     addBase = getMon(dshared+dleft(i),n,dshared+1);
-    
+
     for j = 1 : size(addBase,1)     % for each shift
         col = zeros(1,size(polysys{i,2},1));
         for k = 1 : size(polysys{i,2},1) % for each monomial in the equation
-            
-            col(k) = feti(addBase(j,:)+polysys{i,2}(k,:));            
-        end        
-        
+
+            col(k) = feti(addBase(j,:)+polysys{i,2}(k,:));
+        end
+
         M(rowcounter,col) = polysys{i,1};
         rowcounter = rowcounter + 1;
 %         col = [];

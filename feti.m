@@ -1,12 +1,15 @@
+% September 2019 function copied verbatim from
+% https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+
 function index=feti(exponent)
 % index=feti(exponent)
 % --------------------
-% 
+%
 % Converts a matrix of exponents of n-variate monomials to their
 % corresponding indices with respect to the degree negative lexicographic
 % monomial ordering.
 %
-% index     =   vector, each entry corresponds 
+% index     =   vector, each entry corresponds
 %
 % exponent  =   vector, exponent of a monomial
 %
@@ -19,12 +22,12 @@ function index=feti(exponent)
 %     it under the terms of the GNU Lesser General Public License as published by
 %     the Free Software Foundation, either version 3 of the License, or
 %     (at your option) any later version.
-% 
+%
 %     This program is distributed in the hope that it will be useful,
 %     but WITHOUT ANY WARRANTY; without even the implied warranty of
 %     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 %     GNU Lesser General Public License for more details.
-% 
+%
 %     You should have received a copy of the GNU Lesser General Public License
 %     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 

@@ -1,3 +1,6 @@
+% September 2019 function copied verbatim from
+% https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+
 function fullBase = getMon(d,n,varargin)
 % fullBase = getMon(d,n) or getMon(d,n,d0)
 % ----------------------------------------------
@@ -9,7 +12,7 @@ function fullBase = getMon(d,n,varargin)
 % example: d= 2, n = 3
 %
 % fullBase =
-% 
+%
 %      0     0     0
 %      1     0     0
 %      0     1     0
