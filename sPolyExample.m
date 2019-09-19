@@ -20,9 +20,13 @@ polysys{3,2} = [0 0 3; 1 0 0; 0 1 0; 0 0 1; 0 0 0];
 n=size(polysys{1,2},2); % number of variables is length of some multiindex
 dsmall = 5; % choose degree in which to represent polynomial p as a vector
 
+% p = S(f_1, f_2) + S(f_2, f_3)
+p{1,1} = [ -1, 1, -1, 10, -2, 1, 2, -1, 1, -10];
+p{1,2} = [4,0,0;3,1,0;3,0,1;3,0,0;1,3,0;1,0,3;0,3,1;0,1,3;0,0,4;0,0,3];
+
 
 testrangemin = dsmall;
-testrangemax = dsmall+6;
+testrangemax = dsmall+5;
 
 data = zeros(testrangemax-testrangemin,3);
 

@@ -6,6 +6,7 @@ f_1 = x_2^3 + x_1 - x_2 + x_3 - 10
 f_2 = x_3^3 + x_1 + x_2 - x_3 - 10
 I = ideal(f_0, f_1, f_2)
 
+
 -- construct reducibles r_i = m * b_i where m is action monomial
 -- returns matrix with rows (r_i - normalform(r_i)) , pruned to remove zero rows
 makeReducibles = (m, I) -> transpose ( compress(( m*lift(basis(R/I), R) )  - ( ( m*lift(basis(R/I), R) )) % I ))
