@@ -19,7 +19,7 @@ for i from 0 to numRows(gensMatrix) - 1 do (file << toString( gensMatrix_(i,0) )
 file << close;
 
 -- write r_i - normalform(r_i) for all reducibles i
-m = x_2; -- action monomial
+m = x_1; -- action monomial
 redsMatrix =  makeReducibles(m,I) ;
 file = "reducibles" << ""
 for i from 0 to numRows(redsMatrix) - 1 do (file << toString( redsMatrix_(i,0) ) << endl )
