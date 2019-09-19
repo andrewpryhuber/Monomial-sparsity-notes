@@ -11,6 +11,7 @@ I = ideal(f_0, f_1, f_2)
 -- returns matrix with rows (r_i - normalform(r_i)) , pruned to remove zero rows
 makeReducibles = (m, I) -> transpose ( compress(( m*lift(basis(R/I), R) )  - ( ( m*lift(basis(R/I), R) )) % I ))
 
+
 -- write generators to file for import to matlab
 gensMatrix = transpose gens I ;
 file = "generators" << ""
@@ -24,13 +25,12 @@ file = "reducibles" << ""
 for i from 0 to numRows(redsMatrix) - 1 do (file << toString( redsMatrix_(i,0) ) << endl )
 file << close;
 
-
--- -- returns max degree polynomial in a matrix
--- getMaxDeg = M -> (L = degrees M; L = flatten flatten L; return ( max apply( L, abs) + 1))
--- getMaxDeg(redsMatrix)
+-- returns max degree polynomial in a matrix
+getMaxDeg = M -> (L = degrees M; L = flatten flatten L; return ( max apply( L, abs) + 1))
+getMaxDeg(redsMatrix)
 
 -- -- columns of M generate syzygy module  Syz(f_i)
--- M = syz (gens I);
+-- M = syz (gens I);					    
 
 -- -- computes largest degree monomial encountered when multiplying basis syzygies with generators
 -- numCol = numColumns M;
@@ -38,3 +38,4 @@ file << close;
 -- maxSyzDeg = 0;
 -- for i from 0 to numRow - 1 do for j from 0 to numCol - 1 do maxSyzDeg = max(maxSyzDeg, first degree ( M_(i,j) * f_i ) );
 -- maxSyzDeg
+

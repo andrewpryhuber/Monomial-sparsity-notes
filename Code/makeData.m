@@ -1,24 +1,26 @@
-
+%%%%%%%%%%%%%%%%%
+% set the number of variables manually depending on input system
+% run commands in polysToFile.m2 to change input system 
 numVars = 3;
-syms x_1 x_2 x_3
+syms x_1 x_2 x_3 
 allVars = [x_1, x_2 , x_3];
+%%%%%%%%%%%%%%%%%
 
 % read in generators from M2 
 generators = polyArrToPolySys( readPolysFromFile('generators') , allVars); 
 
-% read in reducibles from M2 (assume GRevLex for now to make these)
+% read in reducibles from M2 (Note: these come from normal set to GRevLex GB)
 reducibles = polyArrToPolySys( readPolysFromFile('reducibles') , allVars);
 
 
 % maximal degree among reducibles, used to determine inital degree,
-% currently set manually
-maxDegReducibles = 6;
-
+% currently set manually, can get max degree of reducibles in polysToFile.m2
+maxDegReducibles = 7;
 numReducibles = size(reducibles,1);
 
 
 testrangemin = maxDegReducibles;
-testrangemax = testrangemin + 1; %change to allow search in higher degree
+testrangemax = testrangemin + 3; %change to allow search in higher degree
 
 data = zeros(testrangemax-testrangemin,3);
 
@@ -28,23 +30,24 @@ for d = testrangemin:testrangemax
     dataindex = dataindex + 1;
     dtest = d;
    
-    % represent p as vector in some degree dtest >= dsmall
+    % represent reducibles as vectors in some degree dtest 
     reduciblesVec = polysys2vec(reducibles,dtest) ;
     
     % make Macaulay matrix of degree dtest
     Mdtest = getM(generators,dtest,1);
 
-    %run 1-norm minimization in CVX to look for fewest # rows to represent p 
-    %currently solver not seeming to work - declares feasible problems
-    %infeasible
+    % run 1-norm minimization in CVX to look for fewest # rows to represent reducibles
+    % currently solver not seeming to work for larger problems 
+    % declares feasible problems infeasible
+    % maybe also need to tune objective function 
     cvx_begin
     cvx_solver mosek
     variable h( size(Mdtest,1) , numReducibles); 
     reduciblesVec' ==  Mdtest' * h;
-    minimize( norm( h,1) );
+    minimize( norm(sum(h,2) ,1) );
     cvx_end
 
-    data(dataindex,:) = [dtest , nnz(abs( h ) > 1e-5), norm(h,1)];
+    data(dataindex,:) = [dtest , nnz(abs( sum(h,2) ) > 1e-5), norm(sum(h,2),1)];
 
     
 end
