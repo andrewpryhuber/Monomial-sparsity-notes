@@ -1,6 +1,6 @@
 %%%%%%%%%%%
 % Requires additional files:
-% - PNLA_MATLAB_OCTAVE functions by Kim Batseiler: https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
+% - PNLA_MATLAB_OCTAVE functions by Kim Batseiler: https://github.com/kbatseli/PNLA_MATLAB_OCTAVE:
 % - CVX: http://cvxr.com/cvx/download/
 %%%%%%%%%%%
 
