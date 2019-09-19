@@ -1,10 +1,10 @@
 %%%%%%%%%%%
 % Requires additional files:
-% - PNLA_MATLAB_OCTAVE functions by Kim Batseiler: https://github.com/kbatseli/PNLA_MATLAB_OCTAVE:
+% - PNLA_MATLAB_OCTAVE functions by Kim Batseiler: https://github.com/kbatseli/PNLA_MATLAB_OCTAVE
 % - CVX: http://cvxr.com/cvx/download/
 %%%%%%%%%%%
 
-clear 
+clear
 format shortg
 
 % x1^3 - x1 + x2 + x3 - 10;
@@ -32,31 +32,29 @@ data = zeros(testrangemax-testrangemin,3);
 
 dataindex = 0;
 for d = testrangemin:testrangemax
-    
+
     dataindex = dataindex + 1;
     dtest = d;
-   
+
     % represent p as vector in some degree dtest >= dsmall
     pvectest = polysys2vec(p,dtest) ;
-    
+
     % make Macaulay matrix of degree dtest
     Mdtest = getM(polysys,dtest);
 
-    %run 1-norm minimization in CVX to look for fewest # rows to represent p 
+    %run 1-norm minimization in CVX to look for fewest # rows to represent p
     cvx_begin quiet
     cvx_solver mosek
-    variable h(size(Mdtest,1)); 
+    variable h(size(Mdtest,1));
     pvectest' == Mdtest'*h;
     minimize( norm(h,1) )
     cvx_end
-    
+
 %     h = h - rem(x,1e-5)
 
     data(dataindex,:) = [dtest , nnz(abs(h) > 1e-5), norm(h,1)];
 
-    
+
 end
 
 array2table(data, 'VariableNames',{'P_d','numNonzeroH','oneNormH'})
-
- 
